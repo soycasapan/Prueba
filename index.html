@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+
+    <!-- CSS Propio -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <title>Prueba</title>
+</head>
+
+<style>
+    body {
+        text-align: center;
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 15px;
+    }
+    
+    input {
+        width: 100px;
+    }
+</style>
+
+<body>
+    <h2>Probando listas</h2>
+
+    <p></p>
+
+    <div id="demo"></div>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" onclick="calcularTotal()" data-toggle="modal" data-target="#exampleModal">
+    Calcular total
+  </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Total</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+                </div>
+                <div class="modal-body">
+                    <span> El costo total de su compra es de $</span>
+                    <span id="calc-total"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        myObj = {
+            "name": "John",
+            "age": 30,
+            "celulares": [{
+                "producto": "Huawei Y6 2019",
+                "costo": 160
+            }, {
+                "producto": "Samsung Galaxy A31",
+                "costo": 600
+            }, {
+                "producto": "Samsung Galaxy Note 20 Ultra",
+                "costo": 2000
+            }, {
+                "producto": "iPhone Xs Max",
+                "costo": 2300
+            }, ]
+        }
+        var x;
+        for (i in myObj.celulares) {
+
+            var parrafo = document.createElement("p");
+            var input = document.createElement("INPUT");
+            var texto = document.createTextNode(myObj.celulares[i].producto);
+            input.setAttribute("placeholder", "Cantidad");
+            input.setAttribute("type", "number");
+            input.setAttribute("name", "cant");
+            input.setAttribute("min", "1");
+            input.setAttribute("max", "10");
+            // LLAMA A LA FUNCION , PASANDO POR PARAMETRO EL COSTO (seria el valor del Objeto JSON , el valor del propio input , y la variba)
+            input.setAttribute("onchange", "calcularSubTotal(" + myObj.celulares[i].costo + ", this.value," + i + ")");
+            parrafo.appendChild(texto);
+            parrafo.appendChild(input);
+
+            //creo variable SUBTOTAL 
+            var subTotal = document.createElement("span");
+            subTotal.setAttribute("class", "st");
+            subTotal.setAttribute("id", "span" + i);
+            var textoSpan = document.createTextNode("Subtotal ");
+
+            //agrego la varibale SUBTotal 
+            subTotal.appendChild(textoSpan);
+            parrafo.appendChild(subTotal);
+            document.getElementById("demo").appendChild(parrafo);
+        }
+
+        function calcularSubTotal(costo, cantidad, idParrafo) {
+            var texto = "$ " + costo * cantidad;
+            document.getElementById("span" + idParrafo).innerHTML = texto;
+        }
+
+        function calcularTotal() {
+            var total = 0;
+            var costos = document.getElementsByClassName("st");
+            for (let i = 0; i < costos.length; i++) {
+                if (costos[i].innerHTML == "Subtotal ") {
+                    total += 0;
+                } else {
+                    total += parseInt(costos[i].innerHTML.substring(2));
+                }
+            };
+            document.getElementById("calc-total").innerHTML = total
+        };
+    </script>
+
+
+    <!-- Optional JavaScript -->
+    <script src="js/jquery.js"></script>
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <!-- JavaScript Propio -->
+    <script src="js/script.js"></script>
+
+</body>
+
+</html>
